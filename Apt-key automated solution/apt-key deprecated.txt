@@ -1,0 +1,1 @@
+sudo apt-key list 2>&1 | grep -E '\/(trusted.gpg.d)' -A 3 | grep -v '^\-\-' | grep -v '^pub ' | /bin/sed 's@.*/trusted.gpg.d/\(.*\)@\1@g' | /bin/awk 'NR%2{printf "%s ",$0;next;}1' | /bin/awk '{print "sudo apt-key export "$10$11" | sudo gpg --dearmour -o /usr/share/keyrings/"$1}' | xargs -I'{}' bash -c "eval '{}'"
